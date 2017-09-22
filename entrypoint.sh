@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-userConfPath="/etc/ssh/sshd-users.conf"
+userConfPath="/usr/local/etc/sshd/sshd-users.conf"
 userConfFinalPath="/var/run/sshd-users.conf"
 
 function printHelp() {
@@ -33,6 +33,8 @@ function createUser() {
         echo "FATAL: You must at least provide a username."
         exit 1
     fi
+
+    mkdir -vp "/home/$user"
     
     useraddOptions="--no-create-home --no-user-group --shell /bin/bash --home-dir /home/$user"
 
@@ -110,12 +112,12 @@ if [ ! -f "$userConfFinalPath" ]; then
     done < "$userConfFinalPath"
 
     # Source custom scripts, if any
-    if [ -d /etc/ssh/conf.d ]; then
-        for f in /etc/ssh/conf.d/*; do
+    if [ -d /usr/local/etc/sshd/conf.d ]; then
+        for f in /usr/local/etc/sshd/conf.d/*; do
             [ -x "$f" ] && . "$f"
         done
         unset f
     fi
 fi
 
-exec /usr/sbin/sshd -D
+exec /usr/sbin/sshd -D -e -f /usr/local/etc/sshd/sshd_config

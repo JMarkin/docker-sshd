@@ -10,14 +10,15 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -vp /var/run/sshd
+RUN mkdir -vp /usr/local/etc/sshd
 
-COPY ./ssh/* /etc/ssh/
+COPY ./sshd/* /usr/local/etc/sshd/
 COPY ./entrypoint.sh /
 
-RUN chmod -v 644 /etc/ssh/*
+RUN chmod -v 644 /usr/local/etc/sshd/*
 RUN chmod -v 755 /entrypoint.sh
 
-VOLUME /etc/ssh/
+VOLUME /usr/local/etc/sshd
 
 EXPOSE 22
 
