@@ -120,4 +120,4 @@ if [ ! -f "$userConfFinalPath" ]; then
     fi
 fi
 
-exec /usr/sbin/sshd -D -e -f /usr/local/etc/sshd/sshd_config
+exec /usr/sbin/sshd -D -e
