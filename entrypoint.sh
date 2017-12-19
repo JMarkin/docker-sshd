@@ -62,7 +62,7 @@ function createUser() {
     echo "$user:$pass" | chpasswd $chpasswdOptions
 
     # Add SSH keys to authorized_keys with valid permissions
-    if [ -d /home/$user/.ssh/keys ]; then
+    if [ -d /home/"$user"/.ssh/keys ]; then
         cat /home/$user/.ssh/keys/* >> /home/$user/.ssh/authorized_keys
         chown $user /home/$user/.ssh/authorized_keys
         chmod 600 /home/$user/.ssh/authorized_keys
